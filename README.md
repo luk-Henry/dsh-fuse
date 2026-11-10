@@ -12,7 +12,7 @@
 
 市面上的「花费显示」已经够多了——它们把账算给你看，然后继续跑。区别就在最后一格：**看到 ¥48.6 之后，它还会让你再发一发。**
 
-![保险丝设置面板](docs/screenshot-panel.png)
+<img width="390" height="750" alt="screenshot-panel" src="https://github.com/user-attachments/assets/bf953364-4e33-448f-9eb1-8de612107ea9" />
 
 *点右下角的药丸打开面板：上面是今日花费，中间改三道闸、降档目标和价目表，下面是最近的拦截记录。*
 
