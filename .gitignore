@@ -1,0 +1,24 @@
+node_modules/
+data/
+.dsh-fuse/
+*.tmp
+*.log
+*.bak
+*.orig
+*.rej
+.env
+.env.*
+coverage/
+.nyc_output/
+.cache/
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+*~
+
+# 本机临时文件
+.restart*.ps1
+.restart*.log
