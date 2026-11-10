@@ -18,7 +18,6 @@
     "lib",
     "locale",
     "docs",
-    "scripts",
     "cordis.patch.yml",
     "icon.svg",
     "README.md",
