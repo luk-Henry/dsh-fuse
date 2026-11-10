@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="保险丝">
+  <rect width="64" height="64" rx="14" fill="#12141a"/>
+  <path d="M10 38h9l4-10 5 20 4-13 4 3h8" fill="none" stroke="#f5b942" stroke-width="3.4"
+        stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M44 20l6 6M50 20l-6 6" stroke="#f5b942" stroke-width="3"
+        stroke-linecap="round" opacity=".55"/>
+  <circle cx="50" cy="44" r="4.2" fill="none" stroke="#8b93a7" stroke-width="2.6"/>
+  <path d="M50 41.6v2.8h2" stroke="#8b93a7" stroke-width="2" stroke-linecap="round"/>
+</svg>

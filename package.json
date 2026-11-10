@@ -1,0 +1,94 @@
+{
+  "name": "dsh-fuse",
+  "version": "0.1.0",
+  "description": "dsh-fuse（保险丝）：DSH 的费用熔断器——单轮 / 近一小时 / 每日三道阈值实时记账，越线先降档、再问人、最后才停，每次拦截都留审计。",
+  "type": "module",
+  "license": "MIT",
+  "author": "dsh-fuse contributors",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js",
+    "./client": "./lib/client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon.svg": "./icon.svg",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "src",
+    "lib",
+    "locale",
+    "docs",
+    "scripts",
+    "cordis.patch.yml",
+    "icon.svg",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "node scripts/build-client.mjs",
+    "test": "node scripts/build-client.mjs && node scripts/selftest.mjs"
+  },
+  "engines": {
+    "node": ">=20",
+    "dsh": ">=0.2.0-rc.2 <0.3.0-0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [],
+      "platform": "web"
+    },
+    "manifestVersion": 1,
+    "compatibility": {
+      "dsh": ">=0.2.0-rc.2 <0.3.0-0",
+      "dshReleases": {
+        "0.2.0-rc.2+": "compatible"
+      }
+    }
+  },
+  "dshhub": {
+    "schemaVersion": 1,
+    "displayName": "保险丝 (dsh-fuse)",
+    "summary": "钱烧超了自动把闸拉下来：单轮 / 近一小时 / 每日三道阈值，先降档、再问人、最后才停，每次拦截都留审计；第三方通道可填自己的价或直接按 token 卡。",
+    "categories": [
+      "费用",
+      "安全",
+      "Web UI"
+    ],
+    "surfaces": [
+      "host",
+      "web"
+    ],
+    "capabilities": {
+      "provides": [
+        "service:fuse"
+      ]
+    },
+    "compatibility": {
+      "dsh": ">=0.2.0-rc.2 <0.3.0-0",
+      "node": ">=20"
+    },
+    "permissions": {
+      "network": []
+    }
+  },
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek",
+    "deepseek-harness",
+    "cost",
+    "cost-control",
+    "budget",
+    "fuse",
+    "熔断",
+    "省钱",
+    "费用"
+  ],
+  "publishConfig": {
+    "access": "public"
+  }
+}

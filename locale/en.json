@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Fuse (dsh-fuse)",
+    "description": "Pulls the brake before the bill runs away. Three live thresholds (per turn, per hour, per day); over the line it downgrades the model first, asks you once, and only then stops. Every trip leaves an audit line."
+  }
+}

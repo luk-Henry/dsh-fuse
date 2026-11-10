@@ -1,0 +1,7 @@
+# dsh-fuse 的 bundle patch：把本包的宿主入口（src/index.js）挂成一个普通 Cordis 插件。
+#
+# 浏览器半边不在这里声明：package.json 的 "dsh.client" 字段告诉 web app
+# 去加载本包的 "./client" 入口（lib/client.js，由 scripts/build-client.mjs 生成）。
+- insert:
+    - id: dsh-fuse
+      name: dsh-fuse
