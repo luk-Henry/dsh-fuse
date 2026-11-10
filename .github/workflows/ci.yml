@@ -1,0 +1,69 @@
+# dsh-fuse 的 CI：ubuntu / windows × Node 20 / 22，四个组合跑同一套离线检查。
+#
+# 只跑不需要真宿主的部分：语法检查 → 重建浏览器半边 → 构建产物一致性 → 自检 →
+# 宿主冒烟。两个测试脚本都用 os.tmpdir() 取临时目录，不写死 Windows 临时目录或
+# 盘符路径，所以 ubuntu 和 windows 上跑的是同一条命令。
+#
+# 所有 run 都只用 node / git 本身，不依赖 bash 或 pwsh 的方言，两个 runner 上行为一致。
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: ${{ matrix.os }} · Node ${{ matrix.node }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    strategy:
+      # 一个组合挂了不要连坐另外三个：四个组合各自给结论。
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        node: ['20', '22']
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      # 不加 cache: npm —— 本仓库零依赖、没有 lockfile，setup-node 的 npm 缓存
+      # 找不到 lockfile 会直接报错把 job 跑挂，省不下什么还多一处失败点。
+      - name: 安装 Node ${{ matrix.node }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      # 为什么不写成一行 `node --check a.js b.js c.js d.js`：node --check 只检查
+      # 第一个参数，后面的文件会被当成脚本参数忽略，坏了也照样 exit 0。所以逐个来。
+      - name: 语法检查 src/index.js
+        run: node --check src/index.js
+
+      - name: 语法检查 src/fuse.js
+        run: node --check src/fuse.js
+
+      - name: 语法检查 src/ledger.js
+        run: node --check src/ledger.js
+
+      - name: 语法检查 src/client.js
+        run: node --check src/client.js
+
+      - name: 重建浏览器半边（src/client.js → lib/client.js）
+        run: node scripts/build-client.mjs
+
+      # lib/client.js 是生成物，但必须提交进 git（宿主运行时读的 "./client" 就是它）。
+      # 这一步挡住「改了 src/client.js 忘了重建」：重建结果和仓库里的版本不一致就红。
+      # 用 --stat 只打摘要，免得 60KB 的产物 diff 刷屏。
+      - name: 校验 lib/client.js 与 src 一致（防止忘记重建）
+        run: git diff --stat --exit-code -- lib/client.js
+
+      - name: 离线自检
+        run: node scripts/selftest.mjs
+
+      - name: 伪宿主冒烟
+        run: node scripts/host-smoke.mjs
